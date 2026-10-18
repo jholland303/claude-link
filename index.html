@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Open Claude session</title>
+<style>body{font:16px system-ui,sans-serif;margin:3rem 1rem;text-align:center;background:#fff;color:#222}@media (prefers-color-scheme:dark){body{background:#1a1a1a;color:#eee}a{color:#8ab4ff}}</style>
+</head>
+<body>
+<p id="msg">Opening Claude…</p>
+<p><a id="go" href="#" hidden>Open in Claude</a></p>
+<script>
+// Only local desktop session ids pass, so this page is never an open redirect.
+const s = new URLSearchParams(location.search).get("s") || "";
+const msg = document.getElementById("msg"), go = document.getElementById("go");
+if (/^local_[0-9a-f-]{36}$/.test(s)) {
+  const url = "claude://code/continue?session=" + s;
+  go.href = url; go.hidden = false;
+  location.href = url;
+} else {
+  msg.textContent = "Missing or invalid session id.";
+}
+</script>
+</body>
+</html>
